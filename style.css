@@ -1,0 +1,38 @@
+.th{
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    color: aliceblue;
+}
+
+td{
+    width: 20px;
+    height: 20px;
+    background-color: aliceblue;
+    color: black;
+    cursor: pointer;
+}
+#table{
+    margin: auto;
+    margin-top: 10px;
+}
+
+#form{
+    width: 100%;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 30px;
+}
+
+.btn{
+    width: 60px;
+    height: 25px;
+    background-color: rgb(78, 187, 230);
+    color: aliceblue;
+    border: 0px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+h3{
+    text-align: center;
+}

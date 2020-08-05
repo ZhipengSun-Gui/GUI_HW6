@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.js"></script>
+    <title>Document</title>
+</head>
+<body>
+<h3>Please Enter the Numbers between -50 to 50</h3>
+<form id="form">
+    <fieldset>
+        <legend>Validating a complete form</legend>
+        <span>
+                <label for="num1">Horizontal Number: From</label>
+                <input type="number" name="num1" id="num1" required>
+                <label id="num1-error" class="error" for="num1"></label>
+            </span>
+        <span>to</span>
+        <span>
+                <input type="number" name="num2" id="num2" required>
+                <label id="num2-error" class="error" for="num2"></label>
+            </span>
+        <br>
+        <span>
+                <label for="num3">Vertical Number: From</label>
+                <input type="number" name="num3" id="num3" required>
+                <label id="num3-error" class="error" for="num3"></label>
+            </span>
+        <span>to</span>
+        <span>
+                <input type="number" name="num4" id="num4" required>
+                <label id="num4-error" class="error" for="num4"></label>
+            </span>
+    </fieldset>
+    <button onclick="handleClick(event)" class="btn">Submit</button>
+</form>
+
+
+<table id="table">
+
+</table>
+
+<script>
+    var input1 = document.getElementById("num1");
+    var input2 = document.getElementById("num2");
+    var input3 = document.getElementById("num3");
+    var input4 = document.getElementById("num4");
+    var table = document.getElementById("table")
+
+    function handleClick(e) {
+        console.log(e)
+        e.preventDefault();
+        if (input1.value >= input2.value || input3.value >= input4.value) {
+            alert("The next number has to be greater than the first");
+        } else if (input1.value < -50 || input1.value > 50 || input2.value < -50 || input2.value > 50 || input3.value < -50 || input3.value > 50 || input4.value < -50 || input4.value > 50) {
+            alert("Please Enter the Numbers between -50 to 50");
+        } else {
+
+            var str = "<tr><td class=\"th\"></td>";
+
+
+            for (let i = input1.value; i <= input2.value; i++) {
+
+                str += "<td class=\"th\">" + i + "</td>";
+                //var str = "<tr><td class=\"th\"></td>";
+
+
+            }
+            str += "</tr>";
+            for (let j = input3.value; j <= input4.value; j++) {
+                str += "<tr>";
+                str += "<td class=\"th\">" + j + "</td>";
+                for (let i = input1.value; i <= input2.value; i++) {
+                    str += "<td>" + (i * j) + "</td>";
+
+                }
+                str += "</tr>";
+
+            }
+            //str+="</tr>";
+            table.innerHTML = str;
+        }
+
+    }
+
+    $.validator.addMethod('compare',
+        function (value, element, params) {
+            const targetVal = $(params.el).val();
+            if (!targetVal) return true;
+            switch (params.type) {
+                case 'less than':
+                    return value < targetVal;
+                case 'great than':
+                    return value > targetVal;
+                default:
+                    return true;
+            }
+        },
+        (param, el) => {
+            return `plz enter a number ${param.type} ${$(param.el).val()}`;
+        })
+    $().ready(function () {
+        $('#form').validate({
+            rules: {
+                num1: {
+                    required: true,
+                    range: [-50, 50],
+                    compare: {
+                        type: 'less than',
+                        el: '#num2'
+                    }
+                },
+                num2: {
+                    required: true,
+                    range: [-50, 50],
+                    compare: {
+                        type: 'great than',
+                        el: '#num1'
+                    }
+                },
+                num3: {
+                    required: true,
+                    range: [-50, 50],
+                    compare: {
+                        type: 'less than',
+                        el: '#num4'
+                    }
+                },
+                num4: {
+                    required: true,
+                    range: [-50, 50],
+                    compare: {
+                        type: 'great than',
+                        el: '#num3'
+                    }
+                },
+            }
+        });
+        $('#form').change(function () {
+            $('#form').valid();
+        })
+    })
+</script>
+</body>
+</html>
